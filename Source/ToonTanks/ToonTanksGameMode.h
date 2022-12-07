@@ -19,6 +19,13 @@ public:
 
 	virtual void BeginPlay() override;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartGame();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void GameOver(bool bWonGame);
+
 private:
 	void HandleGameStart();
 	void DestroyTank();
@@ -28,5 +35,8 @@ private:
 
 	class ATank* Tank;
 	class AToonTanksPlayerController* ToonTanksPlayerController;
+
+	int32 TargetTowers = 0;
+	int32 GetTargetTowerCount();
 
 };

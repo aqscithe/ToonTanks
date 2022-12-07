@@ -30,6 +30,16 @@ ABasePawn::ABasePawn()
 void ABasePawn::HandleDestruction()
 {
 	// Visual and sound effects when pawn is destroyed
+	if (DeathParticles)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), DeathParticles, GetActorLocation(), GetActorRotation());
+	}
+
+	if (DeathSound)
+	{
+		UGameplayStatics::SpawnSoundAtLocation(GetWorld(), DeathSound, GetActorLocation(), GetActorRotation());
+	}
+	
 }
 
 void ABasePawn::RotateTurret(FVector LookAtTarget)
