@@ -5,6 +5,7 @@
 
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Camera/CameraShakeBase.h"
 #include "DrawDebugHelpers.h"
 #include "Projectile.h"
 
@@ -39,6 +40,11 @@ void ABasePawn::HandleDestruction()
 	{
 		UGameplayStatics::SpawnSoundAtLocation(GetWorld(), DeathSound, GetActorLocation(), GetActorRotation());
 	}
+
+	if (DeathCameraShakeClass)
+	{
+		GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathCameraShakeClass);
+	}
 	
 }
 
@@ -59,16 +65,18 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 
 void ABasePawn::Fire()
 {
-	// Spawn a projectile at spawn point
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-		ProjectileClass, 
-		ProjectileSpawnPoint->GetComponentLocation(), 
-		ProjectileSpawnPoint->GetComponentRotation()
-	);
+	if (ProjectileClass)
+	{
+		// Spawn a projectile at spawn point
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileClass,
+			ProjectileSpawnPoint->GetComponentLocation(),
+			ProjectileSpawnPoint->GetComponentRotation()
+			);
 
-	// Necessary for accessing the projectile's owner when applying damage
-	Projectile->SetOwner(this);
-
+		// Necessary for accessing the projectile's owner when applying damage
+		Projectile->SetOwner(this);
+	}
 }
 
 
