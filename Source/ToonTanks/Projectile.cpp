@@ -49,11 +49,11 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 
 void AProjectile::ApplyDamage(AActor* OtherActor)
 {
-	auto MyOwner = GetOwner();
+	AActor* MyOwner = GetOwner();
 	if (MyOwner)
 	{
-		auto MyOwnerInstigator = MyOwner->GetInstigatorController();
-		auto DamageTypeClass = UDamageType::StaticClass();
+		AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
+		UClass* DamageTypeClass = UDamageType::StaticClass();
 
 		// making sure otheractor exists and the projectile can't damage itself or its owner
 		if (OtherActor && OtherActor != this && OtherActor != MyOwner)

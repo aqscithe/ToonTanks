@@ -23,6 +23,7 @@ void ATank::HandleDestruction()
 	
 	SetActorHiddenInGame(true);
 	SetActorTickEnabled(false);
+	bAlive = false;
 }
 
 // Called when the game starts or when spawned
